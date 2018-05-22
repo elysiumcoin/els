@@ -112,42 +112,42 @@ xLDFLAGS=$(LDHARDENING) $(LDFLAGS)
 
 OBJS= \
     leveldb/libleveldb.a \
-    obj/alert.o \
-    obj/version.o \
-    obj/checkpoints.o \
-    obj/netbase.o \
-    obj/addrman.o \
-    obj/crypter.o \
-    obj/key.o \
-    obj/db.o \
-    obj/init.o \
-    obj/keystore.o \
-    obj/main.o \
-    obj/net.o \
-    obj/protocol.o \
-    obj/bitcoinrpc.o \
-    obj/rpcdump.o \
-    obj/rpcnet.o \
-    obj/rpcmining.o \
-    obj/rpcwallet.o \
-    obj/rpcblockchain.o \
-    obj/rpcrawtransaction.o \
-    obj/script.o \
-    obj/scrypt.o \
-    obj/sync.o \
-    obj/util.o \
-    obj/wallet.o \
-    obj/walletdb.o \
-    obj/hash.o \
-    obj/bloom.o \
-    obj/noui.o \
-    obj/leveldb.o \
-    obj/txdb.o
+    ../../output/els/obj/alert.o \
+    ../../output/els/obj/version.o \
+    ../../output/els/obj/checkpoints.o \
+    ../../output/els/obj/netbase.o \
+    ../../output/els/obj/addrman.o \
+    ../../output/els/obj/crypter.o \
+    ../../output/els/obj/key.o \
+    ../../output/els/obj/db.o \
+    ../../output/els/obj/init.o \
+    ../../output/els/obj/keystore.o \
+    ../../output/els/obj/main.o \
+    ../../output/els/obj/net.o \
+    ../../output/els/obj/protocol.o \
+    ../../output/els/obj/bitcoinrpc.o \
+    ../../output/els/obj/rpcdump.o \
+    ../../output/els/obj/rpcnet.o \
+    ../../output/els/obj/rpcmining.o \
+    ../../output/els/obj/rpcwallet.o \
+    ../../output/els/obj/rpcblockchain.o \
+    ../../output/els/obj/rpcrawtransaction.o \
+    ../../output/els/obj/script.o \
+    ../../output/els/obj/scrypt.o \
+    ../../output/els/obj/sync.o \
+    ../../output/els/obj/util.o \
+    ../../output/els/obj/wallet.o \
+    ../../output/els/obj/walletdb.o \
+    ../../output/els/obj/hash.o \
+    ../../output/els/obj/bloom.o \
+    ../../output/els/obj/noui.o \
+    ../../output/els/obj/leveldb.o \
+    ../../output/els/obj/txdb.o
 
 
 ifdef USE_SSE2
 DEFS += -DUSE_SSE2
-OBJS_SSE2= obj/scrypt-sse2.o
+OBJS_SSE2= ../../output/els/obj/scrypt-sse2.o
 OBJS += $(OBJS_SSE2)
 endif
 
@@ -167,29 +167,29 @@ leveldb/libleveldb.a:
 	@echo "Building LevelDB ..." && cd leveldb && $(MAKE) CC=$(CC) CXX=$(CXX) OPT="$(xCXXFLAGS)" libleveldb.a libmemenv.a && cd ..
 
 # auto-generated dependencies:
--include obj/*.P
+-include ../../output/els/obj/*.P
 -include obj-test/*.P
 
-obj/build.h: FORCE
-	/bin/sh ../share/genbuild.sh obj/build.h
-version.cpp: obj/build.h
+../../output/els/obj/build.h: FORCE
+	/bin/sh ../share/genbuild.sh ../../output/els/obj/build.h
+version.cpp: ../../output/els/obj/build.h
 DEFS += -DHAVE_BUILD_INFO
 
-obj/%-sse2.o: %-sse2.cpp
+../../output/els/obj/%-sse2.o: %-sse2.cpp
 	$(CXX) -c $(xCXXFLAGS) -msse2 -MMD -MF $(@:%.o=%.d) -o $@ $<
 	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
 	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-obj/%.o: %.cpp
+../../output/els/obj/%.o: %.cpp
 	$(CXX) -c $(xCXXFLAGS) -MMD -MF $(@:%.o=%.d) -o $@ $<
 	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
 	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-elysiumd: $(OBJS:obj/%=obj/%)
+elysiumd: $(OBJS:../../output/els/obj/%=../../output/els/obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -201,16 +201,16 @@ obj-test/%.o: test/%.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-test_elysium: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
+test_elysium: $(TESTOBJS) $(filter-out ../../output/els/obj/init.o,$(OBJS:../../output/els/obj/%=../../output/els/obj/%))
 	$(LINK) $(xCXXFLAGS) -o $@ $(LIBPATHS) $^ $(TESTLIBS) $(xLDFLAGS) $(LIBS)
 
 clean:
 	-rm -f elysiumd test_elysium
-	-rm -f obj/*.o
+	-rm -f ../../output/els/obj/*.o
 	-rm -f obj-test/*.o
-	-rm -f obj/*.P
+	-rm -f ../../output/els/obj/*.P
 	-rm -f obj-test/*.P
-	-rm -f obj/build.h
+	-rm -f ../../output/els/obj/build.h
 	-cd leveldb && $(MAKE) clean || true
 
 FORCE:
