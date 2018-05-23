@@ -284,7 +284,7 @@ if( COIN_POS )
     $diffNom .= ' &middot; PoS';
     $diff .= ' &middot;' . sprintf( '%.1f', $ace['current_difficulty_pos'] );
 }
-$supl = $ace['num_blocks']*25;
+
 echo "<tr><td><input id='hash' placeholder='Type block height or block hash' style='width:80%' name='hash' type='text'><input type='submit' onclick='window.location.assign(urlid+document.getElementById(fieldid).value);'></td><td>$diffNom:</td><td>$diff</td></tr>";
 echo '<tr><td></td><td>Network hashrate: </td><td>' . $ace['hashrate_mhps'] . ' MH/s</td></tr><tr><td><a href="checkelstransaction.php" style="color:#00FF00;">Check Transaction</a>&nbsp;&nbsp;&nbsp;<a href="elysiumnodes.php" style="color:#00FF00;">Check Active Nodes</a>&nbsp;&nbsp;&nbsp;Circ. Supply: '.get_n_coins($ace['num_blocks']).' &nbsp;&nbsp;&nbsp;Max Supply: <span title="'.number_format(18000000).'">18M</span></td><td>Connections: </td><td>'.$ace['num_connections'].'<img style="margin-left: 10px;" src="'.$imgurl.'"></td></tr></table><hr style="color: #3e3e3e; background-color: #3e3e3e; height: 3px; border: 0;">';
 // list of blocks
